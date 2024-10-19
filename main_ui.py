@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
@@ -57,8 +58,35 @@ class MainUI(QMainWindow):
         driver.find_element(By.XPATH, self.form_data['interested-button-xpath']).click()
         wait.until(EC.element_to_be_clickable((By.XPATH, self.form_data['submit-button-xpath'])))
 
-        for item in self.form_data['basic-info']:
+        #for item in self.form_data['basic-info']:
+        #    driver.find_element(By.XPATH, item['xpath']).send_keys(item['value'])
+
+        #for item in self.form_data['address-information']:
+        #    driver.find_element(By.XPATH, item['xpath']).send_keys(item['value'])
+
+        #skill_set_form = self.form_data['professional-details']['skill-set-form']
+        #skill_set_input = driver.find_element(By.XPATH, skill_set_form['input-xpath'])
+
+        #for item in self.form_data['professional-details']['skills']:
+        #    skill_set_input.send_keys(item['skill'])
+        #    button_string = f"{item['level']}-button-xpath"
+        #    wait.until(EC.element_to_be_clickable((By.XPATH, skill_set_form[button_string])))
+        #    driver.find_element(By.XPATH, skill_set_form[button_string]).click()
+        #    driver.find_element(By.XPATH, skill_set_form['skill-button-xpath']).click()
+        #    skill_set_input.clear()
+        #    sleep(0.4)
+
+        driver.find_element(By.XPATH, self.form_data['education-add-button-xpath']).click()
+
+        for item in self.form_data['education-details']['input-fields']:
             driver.find_element(By.XPATH, item['xpath']).send_keys(item['value'])
+
+        for item in self.form_data['education-details']['date-fields']:
+            driver.find_element(By.XPATH, item['dropdown-xpath']).click()
+            driver.switch_to.active_element.send_keys(item['value'])
+            sleep(0.1)
+            driver.switch_to.active_element.send_keys(Keys.ENTER)
+            driver.switch_to.active_element.send_keys(Keys.ENTER)
 
         sleep(5)
 
