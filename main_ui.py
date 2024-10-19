@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: latin-1 -*-
 from PySide6.QtCore import Qt, QRect
-from helpers import create_form_fields
-from PySide6.QtWidgets import QMainWindow
+from helpers import create_form_elements
+from PySide6.QtWidgets import QMainWindow, QPushButton
 
 class MainUI(QMainWindow):
 
@@ -17,4 +17,17 @@ class MainUI(QMainWindow):
         self.move(1000, 200)
 
     def init_ui(self):
-        create_form_fields(self)
+        create_form_elements(self)
+        self.create_button("Fill", QRect(15, 140, 75, 30), self.fill_application)
+        self.create_button("Submit", QRect(95, 140, 75, 30), self.submit_application)
+
+    def create_button(self, text, geometry, callback):
+        button = QPushButton(text, self)
+        button.setGeometry(geometry)
+        button.clicked.connect(callback)
+
+    def fill_application(self):
+        pass
+
+    def submit_application(self):
+        pass
