@@ -77,7 +77,7 @@ class MainUI(QMainWindow):
         #    skill_set_input.clear()
         #    sleep(0.4)
 
-        #driver.find_element(By.XPATH, self.form_data['education-add-button-xpath']).click()
+        #driver.find_element(By.XPATH, self.form_data['education-details']['add-button-xpath']).click()
 
         #for item in self.form_data['education-details']['input-fields']:
         #    driver.find_element(By.XPATH, item['xpath']).send_keys(item['value'])
@@ -89,7 +89,38 @@ class MainUI(QMainWindow):
         #    driver.switch_to.active_element.send_keys(Keys.ENTER)
         #    driver.switch_to.active_element.send_keys(Keys.ENTER)
 
+        driver.find_element(By.XPATH, self.form_data['experience-details']['add-button-xpath']).click()
 
+        first_entry_input = self.form_data['experience-details']['entries'][0]['input-fields']
+        driver.find_element(By.XPATH, first_entry_input[0]['xpath']).send_keys(first_entry_input[0]['value'])
+        driver.find_element(By.XPATH, first_entry_input[1]['xpath']).send_keys(first_entry_input[1]['value'])
+        driver.find_element(By.XPATH, first_entry_input[2]['xpath']).send_keys(first_entry_input[2]['value'])
+
+        first_entry_date = self.form_data['experience-details']['entries'][0]['date-fields']
+        driver.find_element(By.XPATH, first_entry_date[0]['xpath']).click()
+        driver.switch_to.active_element.send_keys(first_entry_date[0]['value'])
+        sleep(0.1)
+        driver.switch_to.active_element.send_keys(Keys.ENTER)
+        driver.switch_to.active_element.send_keys(Keys.ENTER)
+        driver.find_element(By.XPATH, first_entry_date[1]['xpath']).click()
+        driver.switch_to.active_element.send_keys(first_entry_date[1]['value'])
+        sleep(0.1)
+        driver.switch_to.active_element.send_keys(Keys.ENTER)
+        driver.switch_to.active_element.send_keys(Keys.ENTER)
+        driver.find_element(By.XPATH, first_entry_date[2]['xpath']).click()
+
+        for num, item in enumerate(self.form_data['experience-details']['entries'][1:], 2):
+            driver.find_element(By.XPATH, self.form_data['experience-details']['add-more-button-xpath'].format(num)).click()
+            wait.until(EC.element_to_be_clickable((By.XPATH, item['input-fields'][0]['xpath'])))
+            for input in item['input-fields']:
+                driver.find_element(By.XPATH, input['xpath']).send_keys(input['value'])
+
+            for date in item['date-fields']:
+                driver.find_element(By.XPATH, date['xpath']).click()
+                driver.find_element(By.XPATH, date['xpath']).send_keys(date['value'])
+                sleep(0.3)
+                driver.switch_to.active_element.send_keys(Keys.ENTER)
+                driver.switch_to.active_element.send_keys(Keys.ENTER)
 
         sleep(5)
 
